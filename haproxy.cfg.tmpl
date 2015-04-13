@@ -1,14 +1,32 @@
 global
-  maxconn <%= (typeof GLOBAL_MAXCONN == "undefined") ? 256 : SERVER_MAXCONN %>
+  maxconn <%= (typeof GLOBAL_MAXCONN == "undefined") ? 256 : GLOBAL_MAXCONN %>
 
 defaults
-  mode http
   timeout connect 5000ms
   timeout client 50000ms
   timeout server 50000ms
 
+<% if ((typeof SSL_PASSTHROUGH != "undefined") && JSON.parse(SSL_PASSTHROUGH)) { %>
+listen https-in
+  mode tcp
+  bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %>
+  option ssl-hello-chk
+<% if (typeof BACKEND_SERVERS != "undefined") {
+     var servers = BACKEND_SERVERS.split(",");
+     for (var i = 0; i < servers.length; i++) {
+       var server = servers[i]; %>
+  server server<%= i %> <%= server %> check maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
+<%   }
+   }
+%>
+<% } else { %>
 listen http-in
-  bind *:<%= (typeof PORT == "undefined") ? 80 : PORT %>
+  mode http
+  <% if (typeof KEY != "undefined") { %>
+    bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %> ssl crt /usr/local/etc/haproxy/haproxy.pem
+  <% } else { %>
+    bind *:<%= (typeof PORT == "undefined") ? 80 : PORT %>
+  <% } %>
   <% if (typeof BACKEND_SERVERS != "undefined") {
        var servers = BACKEND_SERVERS.split(",");
        for (var i = 0; i < servers.length; i++) {
@@ -17,3 +35,4 @@ listen http-in
   <%   }
      }
   %>
+<% } %>
