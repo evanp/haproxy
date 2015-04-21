@@ -9,6 +9,7 @@ defaults
 <% if ((typeof SSL_PASSTHROUGH != "undefined") && JSON.parse(SSL_PASSTHROUGH)) { %>
 listen https-in
   mode tcp
+  balance roundrobin
   bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %>
   option ssl-hello-chk
 <% if (typeof BACKEND_SERVERS != "undefined") {
@@ -22,6 +23,7 @@ listen https-in
 <% } else { %>
 listen http-in
   mode http
+  balance roundrobin
   <% if (typeof KEY != "undefined") { %>
     bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %> ssl crt /usr/local/etc/haproxy/haproxy.pem
   <% } else { %>
