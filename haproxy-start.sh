@@ -11,15 +11,19 @@
 
 set -e
 
-export TEMPLATE=/usr/local/share/haproxy.cfg.tmpl
+export CONFTEMPLATE=/usr/local/share/haproxy.cfg.tmpl
 export CONFFILE=/usr/local/etc/haproxy/haproxy.cfg
 export SCORCH=/usr/bin/scorch
 export HAPROXY=/usr/local/sbin/haproxy
+export PEMTEMPLATE=/usr/local/share/haproxy.pem.tmpl
+export PEMFILE=/usr/local/etc/haproxy/haproxy.pem
 
 if [[ "x$KEY" != "x" ]]; then
-  echo $CERT $KEY > /usr/local/etc/haproxy/haproxy.pem
+  $SCORCH -e $PEMTEMPLATE > $PEMFILE
+  ls -la $PEMFILE
 fi
 
-$SCORCH -e $TEMPLATE > $CONFFILE
+$SCORCH -e $CONFTEMPLATE > $CONFFILE
+ls -la $CONFFILE
 
 exec $HAPROXY -db -f $CONFFILE

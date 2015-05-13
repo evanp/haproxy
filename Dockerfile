@@ -11,6 +11,7 @@ RUN curl -L --insecure -O https://www.npmjs.org/install.sh \
 RUN npm install -g scorch@0.2.0
 
 ADD haproxy.cfg.tmpl /usr/local/share/
+ADD haproxy.pem.tmpl /usr/local/share/
 ADD haproxy-start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/haproxy-start.sh
 
