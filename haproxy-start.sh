@@ -17,7 +17,7 @@ export SCORCH=/usr/bin/scorch
 export HAPROXY=/usr/local/sbin/haproxy
 
 if [[ "x$KEY" != "x" ]]; then
-  echo $KEY $CERT > /usr/local/etc/haproxy/haproxy.pem
+  echo $CERT $KEY > /usr/local/etc/haproxy/haproxy.pem
 fi
 
 $SCORCH -e $TEMPLATE > $CONFFILE
