@@ -1,6 +1,9 @@
 global
   maxconn <%= (typeof GLOBAL_MAXCONN == "undefined") ? 256 : GLOBAL_MAXCONN %>
   tune.ssl.default-dh-param 2048
+<% if ((typeof DEBUG) != "undefined") && DEBUG) { %>
+  debug
+<% } %>
 
 defaults
   timeout connect 5000ms
@@ -25,6 +28,7 @@ listen https-in
 listen http-in
   mode http
   balance roundrobin
+  option httpcheck
   <% if (typeof KEY != "undefined") { %>
     bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %> ssl crt /usr/local/etc/haproxy/haproxy.pem
   <% } else { %>
