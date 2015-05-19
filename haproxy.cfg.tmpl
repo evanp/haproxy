@@ -1,7 +1,7 @@
 global
   maxconn <%= (typeof GLOBAL_MAXCONN == "undefined") ? 256 : GLOBAL_MAXCONN %>
   tune.ssl.default-dh-param 2048
-<% if ((typeof DEBUG) != "undefined") && JSON.parse(DEBUG)) { %>
+<% if ((typeof DEBUG != "undefined") && JSON.parse(DEBUG)) { %>
   debug
 <% } %>
 
