@@ -28,7 +28,7 @@ listen https-in
 listen http-in
   mode http
   balance roundrobin
-  option httpcheck
+  option httpchk
   <% if (typeof KEY != "undefined") { %>
     bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %> ssl crt /usr/local/etc/haproxy/haproxy.pem
   <% } else { %>
