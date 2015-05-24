@@ -38,7 +38,7 @@ listen http-in
        var servers = BACKEND_SERVERS.split(",");
        for (var i = 0; i < servers.length; i++) {
           var server = servers[i]; %>
-  server server<%= i %> <%= server %> maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
+  server server<%= i %> <%= server %> check maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
   <%   }
      }
   %>
