@@ -41,7 +41,8 @@ You still need to set the BACKEND_SERVERS variable, of course.
 # HTTPS with SSL Pass-through
 
 If you're using HTTPS with SSL pass-through, set the SSL_PASSTHROUGH variable to
-something truthy (1, 'true'). Your back-end will need to have its own SSL set up.
+something truthy (1, 'true'). Your back-end will need to have its own SSL set
+up.
 
 If you've got SSL_PASSTHROUGH, the default port will be 443.
 
@@ -79,4 +80,16 @@ Maximum connections per server; defaults to 32.
 
 ## SSL_PASSTHROUGH
 
-Set this to something truthy (0, 1, 'false', 'true') to use SSL passthrough mode.
+Set this to something truthy (0, 1, 'false', 'true') to use SSL passthrough
+mode.
+
+## HTTPCHK_VERB
+
+This is the HTTP verb to use when checking with the back-end servers. By default
+it's "OPTIONS", but you can change it to HEAD or GET or whatever.
+
+## HTTPCHK_URL
+
+This is the URL to use when checking with the back-end servers. Default is "/"
+but if that's a heavyweight system or it doesn't exist, then change it to
+something better.
