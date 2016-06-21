@@ -28,6 +28,7 @@ listen https-in
 listen http-in
   mode http
   balance roundrobin
+  option allbackups
   option httpchk <%= (typeof HTTPCHK_VERB == "undefined") ? "OPTIONS" : HTTPCHK_VERB %> <%= (typeof HTTPCHK_URL == "undefined") ? "/" : HTTPCHK_URL %>
   <% if (typeof KEY != "undefined") { %>
     bind *:<%= (typeof PORT == "undefined") ? 443 : PORT %> ssl crt /usr/local/etc/haproxy/haproxy.pem
@@ -39,6 +40,14 @@ listen http-in
        for (var i = 0; i < servers.length; i++) {
           var server = servers[i]; %>
   server server<%= i %> <%= server %> check maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
+  <%   }
+     }
+  %>
+  <% if (typeof BACKUP_SERVERS != "undefined") {
+       var servers = BACKUP_SERVERS.split(",");
+       for (var i = 0; i < servers.length; i++) {
+          var server = servers[i]; %>
+  server server<%= i %> <%= server %> check backup maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
   <%   }
      }
   %>

@@ -48,6 +48,12 @@ If you've got SSL_PASSTHROUGH, the default port will be 443.
 
 You still need to set the BACKEND_SERVERS variable.
 
+# Backup servers
+
+If you want to have a set of servers that only get hit if the BACKEND_SERVERS
+are unavailable, use the BACKUP_SERVERS variable. (Yes, "backend" and "backup"
+are a lot the same. Sorry.)
+
 # Configuration
 
 This makes it possible to configure HAProxy with environment variables, which
@@ -55,7 +61,7 @@ is pretty nice if you're using docker-compose.
 
 ## BACKEND_SERVERS
 
-Backend servers, in "address:port" format.
+Comma-separated list of servers, in "address:port" format.
 
 ## PORT
 
