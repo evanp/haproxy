@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+
+  main1:
+    image: "fuzzyio/show-line:latest"
+    environment:
+      TITLE: "Main 1"
+      LINE: "This is the main server."
+
+  main2:
+    image: "fuzzyio/show-line:latest"
+    environment:
+      TITLE: "Main 2"
+      LINE: "This is the main server."
+
+  backup1:
+    image: "fuzzyio/show-line:latest"
+    environment:
+      TITLE: "Backup 1"
+      LINE: "This is the backup server."
+
+  backup2:
+    image: "fuzzyio/show-line:latest"
+    environment:
+      TITLE: "Backup 2"
+      LINE: "This is the backup server."
+
+  lb:
+    build: "."
+    links:
+      - main1
+      - main2
+      - backup1
+      - backup2
+    ports:
+      - 80:80
+    environment:
+      BACKEND_SERVERS: "main1:80,main2:80"
+      BACKUP_SERVERS: "backup1:80,backup2:80"
