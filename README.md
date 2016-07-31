@@ -99,3 +99,20 @@ it's "OPTIONS", but you can change it to HEAD or GET or whatever.
 This is the URL to use when checking with the back-end servers. Default is "/"
 but if that's a heavyweight system or it doesn't exist, then change it to
 something better.
+
+## TIMEOUT_CONNECT
+
+How long to wait on a server connection before moving on to the next one.
+Use suffixes "us", "ms", "s", "m", "h", "d" for microseconds, milliseconds,
+seconds, minutes, hours and days respectively. If you don't use a suffix,
+defaults to milliseconds. Default is "5s" (five seconds).
+
+## TIMEOUT_CLIENT
+
+How long to wait on a request to complete before giving up. Time span as with
+TIMEOUT_CONNECT. Default is "50s" (fifty seconds).
+
+## TIMEOUT_SERVER
+
+How long to wait on a response to complete before giving up. Time span as with
+TIMEOUT_CONNECT. Default is "50s" (fifty seconds).

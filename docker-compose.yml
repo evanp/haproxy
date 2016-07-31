@@ -38,3 +38,6 @@ services:
     environment:
       BACKEND_SERVERS: "main1:80,main2:80"
       BACKUP_SERVERS: "backup1:80,backup2:80"
+      TIMEOUT_CONNECT: "3s"
+      TIMEOUT_CLIENT: "30s"
+      TIMEOUT_SERVER: "180000ms"

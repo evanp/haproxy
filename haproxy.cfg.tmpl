@@ -6,9 +6,9 @@ global
 <% } %>
 
 defaults
-  timeout connect 5000ms
-  timeout client 50000ms
-  timeout server 50000ms
+  timeout connect <%= (typeof TIMEOUT_CONNECT == "undefined") ? "5s" : TIMEOUT_CONNECT %>
+  timeout client <%= (typeof TIMEOUT_CLIENT == "undefined") ? "50s" : TIMEOUT_CLIENT %>
+  timeout server <%= (typeof TIMEOUT_SERVER == "undefined") ? "50s" : TIMEOUT_SERVER %>
 
 <% if ((typeof SSL_PASSTHROUGH != "undefined") && JSON.parse(SSL_PASSTHROUGH)) { %>
 listen https-in
@@ -39,7 +39,7 @@ listen http-in
        var servers = BACKEND_SERVERS.split(",");
        for (var i = 0; i < servers.length; i++) {
           var server = servers[i]; %>
-  server server<%= i %> <%= server %> check maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
+  server main<%= i %> <%= server %> check maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
   <%   }
      }
   %>
@@ -47,7 +47,7 @@ listen http-in
        var servers = BACKUP_SERVERS.split(",");
        for (var i = 0; i < servers.length; i++) {
           var server = servers[i]; %>
-  server server<%= i %> <%= server %> check backup maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
+  server backup<%= i %> <%= server %> check backup maxconn <%= (typeof SERVER_MAXCONN == "undefined") ? 32 : SERVER_MAXCONN %>
   <%   }
      }
   %>
